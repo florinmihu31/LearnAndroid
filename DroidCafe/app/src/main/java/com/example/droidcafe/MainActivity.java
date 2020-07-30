@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, OrderActivity.class);
 
                 if (mOrderMessage == null) {
-                    Toast.makeText(MainActivity.this, "You should choose what to order",
+                    Toast.makeText(MainActivity.this, getString(R.string.should_choose_order),
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
