@@ -14,7 +14,8 @@ public class OrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order);
 
         Intent intent = getIntent();
-        String message = "Order: " + intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        String order = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        String message = "Order: " + (order == null ? "You haven't ordered anything yet." : order);
 
         TextView textView = findViewById(R.id.order_textview);
         textView.setText(message);
