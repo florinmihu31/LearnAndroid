@@ -33,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, OrderActivity.class);
 
+                if (mOrderMessage == null) {
+                    Toast.makeText(MainActivity.this, "You should choose what to order",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 intent.putExtra(EXTRA_MESSAGE, mOrderMessage);
                 startActivity(intent);
             }
@@ -78,5 +84,11 @@ public class MainActivity extends AppCompatActivity {
     public void showFroyoOrder(View view) {
         mOrderMessage = getString(R.string.froyo_order_message);
         displayToast(mOrderMessage);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mOrderMessage = null;
     }
 }
