@@ -47,8 +47,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-            getWindow().setEnterTransition(new Fade());
-            getWindow().setExitTransition(new Explode());
+
+            Fade fade = new Fade();
+            View decor = getWindow().getDecorView();
+            fade.excludeTarget(decor.findViewById(R.id.action_bar_container), true);
+            fade.excludeTarget(android.R.id.statusBarBackground, true);
+            fade.excludeTarget(android.R.id.navigationBarBackground, true);
+
+            getWindow().setEnterTransition(fade);
+            getWindow().setExitTransition(fade);
         }
 
         super.onCreate(savedInstanceState);

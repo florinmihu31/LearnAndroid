@@ -16,8 +16,11 @@
 
 package com.example.android.materialme;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -130,11 +133,15 @@ class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.ViewHolder>  {
         public void onClick(View view) {
             Sport currentSport = mSportsData.get(getAdapterPosition());
             Intent detailIntent = new Intent(mContext, DetailActivity.class);
+            ImageView imageView = itemView.findViewById(R.id.sportsImage);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    (Activity) mContext, imageView, ViewCompat.getTransitionName(imageView)
+            );
 
             detailIntent.putExtra("title", currentSport.getTitle());
             detailIntent.putExtra("image_resource", currentSport.getImageResource());
 
-            mContext.startActivity(detailIntent);
+            mContext.startActivity(detailIntent, options.toBundle());
         }
     }
 }
