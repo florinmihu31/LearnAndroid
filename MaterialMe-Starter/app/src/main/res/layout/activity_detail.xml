@@ -23,7 +23,8 @@
             android:layout_alignBottom="@id/sportsImageDetail"
             android:padding="16dp"
             android:text="@string/title_placeholder"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:transitionName="textview_transition" />
 
         <TextView
             android:id="@+id/newsTitleDetail"
