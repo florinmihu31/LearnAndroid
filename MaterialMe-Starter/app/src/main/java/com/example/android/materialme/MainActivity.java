@@ -17,13 +17,17 @@
 package com.example.android.materialme;
 
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+            getWindow().setEnterTransition(new Fade());
+            getWindow().setExitTransition(new Explode());
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
