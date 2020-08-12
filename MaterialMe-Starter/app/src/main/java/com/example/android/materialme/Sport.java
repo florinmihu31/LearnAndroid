@@ -59,4 +59,13 @@ class Sport {
     public int getImageResource() {
         return imageResource;
     }
+
+    @Override
+    public String toString() {
+        return "Sport{" +
+                "title='" + title + '\'' +
+                ", info='" + info + '\'' +
+                ", imageResource=" + imageResource +
+                '}';
+    }
 }

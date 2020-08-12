@@ -22,8 +22,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /***
  * Main Activity for the Material Me app, a mock sports news application
@@ -64,7 +67,16 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMove(RecyclerView recyclerView,
                                   RecyclerView.ViewHolder viewHolder,
                                   RecyclerView.ViewHolder target) {
-                return false;
+                int from = viewHolder.getAdapterPosition();
+                int to = target.getAdapterPosition();
+
+                Collections.swap(mSportsData, from, to);
+
+                mAdapter.notifyItemMoved(from, to);
+
+                Log.d("MainActivity", mSportsData.toString());
+
+                return true;
             }
 
             @Override
@@ -105,4 +117,7 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
     }
 
+    public void resetSports(View view) {
+        initializeData();
+    }
 }
