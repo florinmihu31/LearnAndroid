@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Material Me!</string>
+    <string name="title_placeholder">Titlu</string>
+    <string name="news_placeholder">Stiri</string>
+    <string name="sports_info_placeholder">Aici sunt stiri</string>
+    <string name="subtitle_detail">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
+    <string-array name="sports_titles">
+        <item>Baseball</item>
+        <item>Badminton</item>
+        <item>Baschet</item>
+        <item>Bowling</item>
+        <item>Ciclism</item>
+        <item>Golf</item>
+        <item>Alergare</item>
+        <item>Fotbal</item>
+        <item>Inot</item>
+        <item>Tenis de Masa</item>
+        <item>Tenis de Camp</item>
+    </string-array>
+
+    <string-array name="sports_info">
+        <item>Aici sunt stiri despre Baseball!</item>
+        <item>Aici sunt stiri despre Badminton!</item>
+        <item>Aici sunt stiri despre Baschet!</item>
+        <item>Aici sunt stiri despre Bowling!</item>
+        <item>Aici sunt stiri despre Ciclism!</item>
+        <item>Aici sunt stiri despre Golf!</item>
+        <item>Aici sunt stiri despre Alergare!</item>
+        <item>Aici sunt stiri despre Fotbal!</item>
+        <item>Aici sunt stiri despre Inot!</item>
+        <item>Aici sunt stiri despre Tenis de Masa!</item>
+        <item>Aici sunt stiri despre Tenis de Camp!</item>
+    </string-array>
+</resources>
