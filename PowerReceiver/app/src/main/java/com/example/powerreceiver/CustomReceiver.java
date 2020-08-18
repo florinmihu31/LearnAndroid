@@ -19,15 +19,19 @@ public class CustomReceiver extends BroadcastReceiver {
 
             switch (intentAction) {
                 case Intent.ACTION_POWER_CONNECTED:
-                    toastMessage = "Power connected!";
+                    toastMessage = "Power Connected!";
                     break;
 
                 case Intent.ACTION_POWER_DISCONNECTED:
-                    toastMessage = "Power disconnected!";
+                    toastMessage = "Power Disconnected!";
                     break;
 
                 case ACTION_CUSTOM_BROADCAST:
                     toastMessage = "Custom Broadcast Received!";
+                    break;
+
+                case Intent.ACTION_HEADSET_PLUG:
+                    toastMessage = "Headset Plugged!";
                     break;
             }
 

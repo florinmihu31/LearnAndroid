@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_POWER_CONNECTED);
         filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        filter.addAction(Intent.ACTION_HEADSET_PLUG);
 
         registerReceiver(mReceiver, filter);
         LocalBroadcastManager.getInstance(this)
