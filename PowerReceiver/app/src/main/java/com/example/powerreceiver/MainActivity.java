@@ -8,11 +8,17 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
     private CustomReceiver mReceiver = new CustomReceiver();
     private static final String ACTION_CUSTOM_BROADCAST = BuildConfig.APPLICATION_ID +
             ".ACTION_CUSTOM_BROADCAST";
+    private Random random = new Random();
+    private int number;
+
+    public static final String EXTRA_TAG = "Extra";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
         filter.addAction(Intent.ACTION_HEADSET_PLUG);
 
         registerReceiver(mReceiver, filter);
+
+        number = random.nextInt(21);
+
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mReceiver, new IntentFilter(ACTION_CUSTOM_BROADCAST));
     }
@@ -38,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendCustomBroadcast(View view) {
         Intent customBroadcastIntent = new Intent(ACTION_CUSTOM_BROADCAST);
+        customBroadcastIntent.putExtra(EXTRA_TAG, number);
         LocalBroadcastManager.getInstance(this).sendBroadcast(customBroadcastIntent);
     }
 }

@@ -13,6 +13,7 @@ public class CustomReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String intentAction = intent.getAction();
+        int number = intent.getIntExtra(MainActivity.EXTRA_TAG, -1);
 
         if (intentAction != null) {
             String toastMessage = "Unknown intent action";
@@ -27,7 +28,8 @@ public class CustomReceiver extends BroadcastReceiver {
                     break;
 
                 case ACTION_CUSTOM_BROADCAST:
-                    toastMessage = "Custom Broadcast Received!";
+                    toastMessage = "Custom Broadcast Received!\n";
+                    toastMessage += "Square of random number: " + (number * number);
                     break;
 
                 case Intent.ACTION_HEADSET_PLUG:
