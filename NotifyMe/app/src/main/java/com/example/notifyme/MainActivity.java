@@ -17,6 +17,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String PRIMARY_CHANNEL_ID = "primary_notification_channel";
     private static final String ACTION_UPDATE_NOTIFICATION =
             "com.example.android.notifyme.ACTION_UPDATE_NOTIFICATION";
+    private static final String ACTION_DELETE_NOTIFICATION =
+            "com.example.android.notifyme.ACTION_DELETE_NOTIFICATION";
     private static final int NOTIFICATION_ID = 0;
 
     private Button buttonNotify;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private NotificationManager mNotificationManager;
     private NotificationReceiver mNotificationReceiver = new NotificationReceiver();
+    private DeleteNotificationReceiver mDeleteNotificationReceiver = new DeleteNotificationReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,25 +43,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         buttonNotify = findViewById(R.id.notify);
-        buttonNotify.setOnClickListener(view -> {
-            sendNotification();
-        });
+        buttonNotify.setOnClickListener(view -> sendNotification());
 
         buttonUpdate = findViewById(R.id.update);
-        buttonUpdate.setOnClickListener(view -> {
-            updateNotification();
-        });
+        buttonUpdate.setOnClickListener(view -> updateNotification());
 
         buttonCancel = findViewById(R.id.cancel);
-        buttonCancel.setOnClickListener(view -> {
-            cancelNotification();
-        });
+        buttonCancel.setOnClickListener(view -> cancelNotification());
 
         createNotificationChannel();
 
         setNotificationButtonState(true, false, false);
 
         registerReceiver(mNotificationReceiver, new IntentFilter(ACTION_UPDATE_NOTIFICATION));
+        registerReceiver(mDeleteNotificationReceiver, new IntentFilter(ACTION_DELETE_NOTIFICATION));
     }
 
     public void sendNotification() {
@@ -65,8 +64,13 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent updatePendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_ID,
                 updateIntent, PendingIntent.FLAG_ONE_SHOT);
 
+        Intent cancelIntent = new Intent(ACTION_DELETE_NOTIFICATION);
+        PendingIntent cancelPendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_ID,
+                cancelIntent, PendingIntent.FLAG_ONE_SHOT);
+
         NotificationCompat.Builder notifyBuilder = getNotificationBuilder();
-        notifyBuilder.addAction(R.drawable.ic_update, "Update Notification", updatePendingIntent);
+        notifyBuilder.addAction(R.drawable.ic_update, "Update Notification", updatePendingIntent)
+                .setDeleteIntent(cancelPendingIntent);
         mNotificationManager.notify(NOTIFICATION_ID, notifyBuilder.build());
 
         setNotificationButtonState(false, true, true);
@@ -76,9 +80,14 @@ public class MainActivity extends AppCompatActivity {
         Bitmap androidImage = BitmapFactory.decodeResource(getResources(), R.drawable.mascot_1);
         NotificationCompat.Builder notifyBuilder = getNotificationBuilder();
 
+        Intent cancelIntent = new Intent(ACTION_DELETE_NOTIFICATION);
+        PendingIntent cancelPendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_ID,
+                cancelIntent, PendingIntent.FLAG_ONE_SHOT);
+
         notifyBuilder.setStyle(new NotificationCompat.BigPictureStyle()
                 .bigPicture(androidImage)
-                .setBigContentTitle("Notification Updated!"));
+                .setBigContentTitle("Notification Updated!"))
+                .setDeleteIntent(cancelPendingIntent);
 
         mNotificationManager.notify(NOTIFICATION_ID, notifyBuilder.build());
 
@@ -132,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         unregisterReceiver(mNotificationReceiver);
+        unregisterReceiver(mDeleteNotificationReceiver);
         super.onDestroy();
     }
 
@@ -144,6 +154,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             updateNotification();
+        }
+    }
+
+    public class DeleteNotificationReceiver extends BroadcastReceiver {
+
+        public DeleteNotificationReceiver() {
+
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("PLM", "AICI");
+            cancelNotification();
         }
     }
 }
