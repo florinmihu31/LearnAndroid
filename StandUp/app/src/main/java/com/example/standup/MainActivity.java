@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -28,13 +29,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
         Intent notifyIntent = new Intent(this, AlarmReceiver.class);
+        boolean alarmUp = (PendingIntent.getBroadcast(this, NOTIFICATION_ID, notifyIntent,
+                PendingIntent.FLAG_NO_CREATE) != null);
+
         final PendingIntent notifyPendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_ID,
                 notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         ToggleButton alarmToggle = findViewById(R.id.alarmToggle);
+        alarmToggle.setChecked(alarmUp);
         alarmToggle.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             String toastMessage;
 
@@ -62,8 +68,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createNotificationChannel() {
-        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(PRIMARY_CHANNEL_ID,
                     "Stand Up Notification", NotificationManager.IMPORTANCE_HIGH);
@@ -76,7 +80,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void deliverNotification(Context context) {
+    public void getNextAlarm(View view) {
+        final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AlarmManager.AlarmClockInfo nextAlarm = alarmManager.getNextAlarmClock();
+
+            if (nextAlarm != null) {
+                Toast.makeText(this, nextAlarm.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
 
     }
 }
