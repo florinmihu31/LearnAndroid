@@ -2,4 +2,5 @@
     <string name="app_name">Notification Scheduler</string>
     <string name="content_title">Job Service</string>
     <string name="content_description">Your Job is running!</string>
+    <string name="not_set">Not set</string>
 </resources>
