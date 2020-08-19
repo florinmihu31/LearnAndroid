@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Please set at least one constraint", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public void cancelJobs(View view) {
