@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         String marketPref = sharedPref.getString("sync_frequency", "-1");
+        String deliveryMethod = sharedPref.getString("delivery_methods", "-1");
+        displayToast(deliveryMethod);
         displayToast(marketPref);
     }
 

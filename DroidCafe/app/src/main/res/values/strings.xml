@@ -97,4 +97,16 @@
     <string-array name="multi_select_list_preference_default_value" />
 
     <string name="pref_title_system_account_settings">Account settings</string>
+
+    <string-array name="delivery_methods">
+        <item>@string/same_day_messenger_service</item>
+        <item>@string/next_day_ground_delivery</item>
+        <item>@string/pick_up</item>
+    </string-array>
+
+    <string-array name="delivery_methods_values">
+        <item>Same day</item>
+        <item>Next day</item>
+        <item>Pick up</item>
+    </string-array>
 </resources>

@@ -20,4 +20,14 @@
         app:positiveButtonText="@null"
         app:title="@string/pref_title_account" />
 
+    <ListPreference
+        app:defaultValue="@string/same_day_messenger_service"
+        app:entries="@array/delivery_methods"
+        app:entryValues="@array/delivery_methods_values"
+        app:key="delivery_methods"
+        app:negativeButtonText="@null"
+        app:positiveButtonText="@null"
+        app:title="@string/choose_delivery_method"
+        app:useSimpleSummaryProvider="true" />
+
 </PreferenceScreen>
