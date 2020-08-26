@@ -1,6 +1,7 @@
 package com.example.droidcafe;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -8,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
 
 import android.view.View;
 
@@ -43,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        PreferenceManager.setDefaultValues(this, R.xml.header_preferences, false);
+        PreferenceManager.setDefaultValues(this, R.xml.account_preferences, false);
+        PreferenceManager.setDefaultValues(this, R.xml.messages_preferences, false);
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String marketPref = sharedPref.getString("sync_frequency", "-1");
+        displayToast(marketPref);
     }
 
     @Override
@@ -71,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_contact:
                 displayToast(getString(R.string.action_contact_message));
+                return true;
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
                 return true;
         }
 

@@ -1,0 +1,23 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        app:key="sync"
+        app:title="@string/pref_header_account" />
+
+    <SwitchPreferenceCompat
+        app:dependency="sync"
+        app:key="attachment"
+        app:summaryOff="@string/attachment_summary_off"
+        app:summaryOn="@string/attachment_summary_on"
+        app:title="@string/attachment_title" />
+
+    <ListPreference
+        app:defaultValue="US"
+        app:entries="@array/pref_market_titles"
+        app:entryValues="@array/pref_market_values"
+        app:key="sync_frequency"
+        app:negativeButtonText="@null"
+        app:positiveButtonText="@null"
+        app:title="@string/pref_title_account" />
+
+</PreferenceScreen>
