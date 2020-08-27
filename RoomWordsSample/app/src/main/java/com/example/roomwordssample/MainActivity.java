@@ -24,10 +24,16 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import static com.example.roomwordssample.NewWordActivity.EXTRA_REPLY;
+import static com.example.roomwordssample.NewWordActivity.EXTRA_REPLY_ID;
+
 public class MainActivity extends AppCompatActivity {
 
     private WordViewModel mWordViewModel;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+    public static final int UPDATE_WORD_ACTIVITY_REQUEST_CODE = 2;
+    public static final String EXTRA_DATA_UPDATE_WORD = "extra_word_to_be_updated";
+    public static final String EXTRA_DATA_ID = "extra_data_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +88,14 @@ public class MainActivity extends AppCompatActivity {
         );
 
         helper.attachToRecyclerView(recyclerView);
+
+        adapter.setOnItemClickListener(new WordListAdapter.ClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Word word = adapter.getWordAtPosition(position);
+                launchUpdateWordActivity(word);
+            }
+        });
     }
 
     @Override
@@ -113,11 +127,27 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Word word = new Word(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
+            Word word = new Word(data.getStringExtra(EXTRA_REPLY));
             mWordViewModel.insert(word);
+        } else if (requestCode == UPDATE_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            String wordData = data.getStringExtra(EXTRA_REPLY);
+            int id = data.getIntExtra(EXTRA_REPLY_ID, -1);
+
+            if (id != -1) {
+                mWordViewModel.updateWord(new Word(id, wordData));
+            } else {
+                Toast.makeText(this, "Unable to update", Toast.LENGTH_LONG).show();
+            }
         } else {
             Toast.makeText(getApplicationContext(), R.string.empty_not_saved, Toast.LENGTH_LONG)
                     .show();
         }
+    }
+
+    private void launchUpdateWordActivity(Word word) {
+        Intent intent = new Intent(this, NewWordActivity.class);
+        intent.putExtra(EXTRA_DATA_UPDATE_WORD, word.getWord());
+        intent.putExtra(EXTRA_DATA_ID, word.getId());
+        startActivityForResult(intent, UPDATE_WORD_ACTIVITY_REQUEST_CODE);
     }
 }
